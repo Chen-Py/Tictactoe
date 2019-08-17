@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -15,41 +14,15 @@ MainWindow::~MainWindow()
 
 jing_game game;
 AI CPY;
-bool xian=0,alr=0;
-
+bool xian;
 void MainWindow::AI_do(int at)
 {
-    if(!alr)
-    {
-        CPY.get_qipu();
-        alr=1;
-    }
     if(!xian)at=CPY.roll(at);
     int x=CPY.x[at];
     int y=CPY.y[at];
-    if(x==0|y==0)return;
     game.modify(x,y);
-    if(x==1&&y==1&&xian==1)ui->pushButton->setStyleSheet("QPushButton{background:blue}");
-    if(x==1&&y==2&&xian==1)ui->pushButton_2->setStyleSheet("QPushButton{background:blue}");
-    if(x==1&&y==3&&xian==1)ui->pushButton_3->setStyleSheet("QPushButton{background:blue}");
-    if(x==2&&y==1&&xian==1)ui->pushButton_4->setStyleSheet("QPushButton{background:blue}");
-    if(x==2&&y==2&&xian==1)ui->pushButton_5->setStyleSheet("QPushButton{background:blue}");
-    if(x==2&&y==3&&xian==1)ui->pushButton_6->setStyleSheet("QPushButton{background:blue}");
-    if(x==3&&y==1&&xian==1)ui->pushButton_7->setStyleSheet("QPushButton{background:blue}");
-    if(x==3&&y==2&&xian==1)ui->pushButton_8->setStyleSheet("QPushButton{background:blue}");
-    if(x==3&&y==3&&xian==1)ui->pushButton_9->setStyleSheet("QPushButton{background:blue}");
-    if(x==1&&y==1&&xian==0)ui->pushButton->setStyleSheet("QPushButton{background:red}");
-    if(x==1&&y==2&&xian==0)ui->pushButton_2->setStyleSheet("QPushButton{background:red}");
-    if(x==1&&y==3&&xian==0)ui->pushButton_3->setStyleSheet("QPushButton{background:red}");
-    if(x==2&&y==1&&xian==0)ui->pushButton_4->setStyleSheet("QPushButton{background:red}");
-    if(x==2&&y==2&&xian==0)ui->pushButton_5->setStyleSheet("QPushButton{background:red}");
-    if(x==2&&y==3&&xian==0)ui->pushButton_6->setStyleSheet("QPushButton{background:red}");
-    if(x==3&&y==1&&xian==0)ui->pushButton_7->setStyleSheet("QPushButton{background:red}");
-    if(x==3&&y==2&&xian==0)ui->pushButton_8->setStyleSheet("QPushButton{background:red}");
-    if(x==3&&y==3&&xian==0)ui->pushButton_9->setStyleSheet("QPushButton{background:red}");
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    return;
 }
 void MainWindow::on_pushButton_clicked()
 {
@@ -59,8 +32,6 @@ void MainWindow::on_pushButton_clicked()
     game.modify(1,1);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -72,8 +43,6 @@ void MainWindow::on_pushButton_2_clicked()
     game.modify(1,2);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -85,8 +54,6 @@ void MainWindow::on_pushButton_3_clicked()
     game.modify(1,3);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -98,8 +65,6 @@ void MainWindow::on_pushButton_4_clicked()
     game.modify(2,1);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -111,8 +76,6 @@ void MainWindow::on_pushButton_5_clicked()
     game.modify(2,2);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -124,8 +87,6 @@ void MainWindow::on_pushButton_6_clicked()
     game.modify(2,3);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -137,8 +98,6 @@ void MainWindow::on_pushButton_7_clicked()
     game.modify(3,1);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -150,8 +109,6 @@ void MainWindow::on_pushButton_8_clicked()
     game.modify(3,2);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
     return;
 }
 
@@ -163,33 +120,5 @@ void MainWindow::on_pushButton_9_clicked()
     game.modify(3,3);
     if(game.winner==1)ui->textBrowser->textCursor().insertText("The blue player won!");
     if(game.winner==2)ui->textBrowser->textCursor().insertText("The red player won!");
-    if(game.winner)return;
-    AI_do(game.code);
-    return;
-}
-
-void MainWindow::on_pushButton_10_clicked()
-{
-    xian=1;
-    AI_do(game.code);
-
-
-    return;
-}
-
-void MainWindow::on_pushButton_11_clicked()
-{
-    ui->textBrowser->setText("");
-    ui->pushButton->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_2->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_3->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_4->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_5->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_6->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_7->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_8->setStyleSheet("QPushButton{background:lightgray}");
-    ui->pushButton_9->setStyleSheet("QPushButton{background:lightgray}");
-    game.clear();
-    xian=0;
     return;
 }
