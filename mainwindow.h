@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <iostream>
+#include <cstdio>
 
 namespace Ui {
 class MainWindow;
@@ -10,17 +12,18 @@ class MainWindow;
 struct key
 {
     int zhan=0;
-    bool l=0,r=0,u=0,d=0;
 };
 
 struct jing_game
 {
     key map[5][5];
+    int code=0;
     bool turn=0;
     int winner=0;
     void modify(int x,int y)
     {
         map[x][y].zhan=turn+1;
+        code|=(turn+1)<<2*(3*x+y-4);
         if(map[x-1][y].zhan==map[x][y].zhan&&map[x][y].zhan==map[x+1][y].zhan)winner=turn+1;
         if(map[x][y-1].zhan==map[x][y].zhan&&map[x][y].zhan==map[x][y+1].zhan)winner=turn+1;
         if(y<2&&map[x][y].zhan==map[x][y+1].zhan&&map[x][y].zhan==map[x][y+2].zhan)winner=turn+1;
@@ -36,10 +39,24 @@ struct jing_game
         turn=!turn;
         return;
     }
+    void clear()
+    {
+        for(int i=1;i<=3;i++)
+        {
+            for(int j=1;j<=3;j++)
+            {
+                map[i][j].zhan=0;
+            }
+        }
+        code=0;
+        turn=0;
+        winner=0;
+        return;
+    }
 };
 struct AI
 {
-    int val[270010],x[270010],y[270010],to[270010];
+    int val[270010],x[270010],y[270010];
     int m[5][5];
     int mark(int x,int y)
     {
@@ -114,8 +131,11 @@ struct AI
                     val[at]=tval;
                     x[at]=i;
                     y[at]=j;
-                    to[at]=tat;
                 }
+
+                freopen("qipu.out","w",stdout);
+                printf("%d",(x[at]+y[at]+val[at])%2);
+
             }
         }
         if(!flag)val[at]=0;
@@ -162,6 +182,11 @@ private slots:
     void on_pushButton_8_clicked();
 
     void on_pushButton_9_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_pushButton_11_clicked();
+
 
 private:
     Ui::MainWindow *ui;
